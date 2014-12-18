@@ -11,9 +11,11 @@ import java.util.List;
 
 public class Letters { // derive LatinString, GreekString, etc
 
-
     private List<Letter> letters;
 
+    public Letters() {
+        letters = new ArrayList<Letter>();
+    }
     public Letters(List<Letter> lets) {
         this.letters = lets;
     }
