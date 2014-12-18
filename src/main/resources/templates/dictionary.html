@@ -1,0 +1,88 @@
+<html ng-app="dictManagerApp">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>AngularJS Dictionary Manager</title>
+	<link href='./css/style.css' rel="stylesheet" type="text/css" />
+	<link href='./css/css/font-awesome.css' rel="stylesheet" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+	<script data-require="angular.js@*" data-semver="1.3.0-beta.14" src="http://code.angularjs.org/1.3.0-beta.14/angular.js"></script>
+	<script data-require="angular-animate@*" data-semver="1.3.0-beta.14" src="http://code.angularjs.org/1.3.0-beta.14/angular-animate.js"></script>
+	<script type="text/javascript" src="./js/dict-app.js"></script>
+</head>
+<body>
+
+<div ng-controller="dictManagerController">
+	<h2 class="page-title">Clovis Dictionary Manager</h2>
+	<h4 class="page-title">Mark Bordelon</h4>
+	<div id="greekLexeme-panel" class="fadein fadeout showpanel panel" ng-show="toggle">
+		<div class="panel-heading">
+			<i class="panel-title-icon fa fa-tasks"></i>
+			<span class="panel-title">Recent Greek Lexemes</span>
+			<div class="panel-heading-controls">
+				<button ng-click="toggle = !toggle" class="btn-panel">Add Dictionary Item</button>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="greekLexeme" ng-repeat="greekLexeme in greekLexemes">
+				<span>
+					{{greekLexeme.lex}}
+				</span>
+				<span>
+					{{greekLexeme.pars}}
+				</span>
+
+				<span ng-if="greekLexeme.freq > 1.0" class="priority priority-red">
+					{{greekLexeme.freq}}
+				</span>
+				<span ng-if="greekLexeme.freq == 1.0" class="priority priority-yellow">
+					{{greekLexeme.freq}}
+				</span>
+				<span ng-if="greekLexeme.freq &lt; 1.0" class="priority priority-green">
+					{{greekLexeme.freq}}
+				</span>
+
+				<div class="action-checkbox">
+                    <input id="{{greekLexeme._links.self.href}}" type="checkbox" value="{{greekLexeme._links.self.href}}" ng-checked="selection.indexOf(greekLexeme._links.self.href) > -1" ng-click="toggleSelection(greekLexeme._links.self.href)" />
+                    <label for="{{greekLexeme._links.self.href}}" ></label>
+                </div>
+
+			</div>
+		</div>
+	</div>
+	<div id="add-greekLexeme-panel" class="fadein fadeout addpanel panel" ng-hide="toggle">
+		<div class="panel-heading">
+			<i class="panel-title-icon fa fa-plus"></i>
+			<span class="panel-title">Add Lexeme</span>
+			<div class="panel-heading-controls">
+				<button ng-click="toggle = !toggle" class="btn-panel">Show Lexemes</button>
+			</div>
+		</div>
+		<div class="panel-body">
+			<div class="greekLexeme" >
+				<table class="add-greekLexeme">
+					<tr>
+						<td>Lex:</td>
+						<td><input type="text" ng-model="lex"/></td>
+					</tr>
+					<tr>
+						<td>Pars:</td>
+						<td>
+							<select ng-model="pars" ng-options="pars as pars for pars in parses">
+								<option value="">-- Select --</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Semantic Id:</td>
+						<td><input type="text" ng-model="semanid"/></td>
+					</tr>
+					<tr>
+						<td><br/><button ng-click="addGreekLexeme()" class="btn-panel-big">Add New Lexeme</button></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

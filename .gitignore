@@ -1,0 +1,22 @@
+# generic files
+*~
+*.lock
+*.swp
+*.out
+*.class
+
+# IDE
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.iws
+nbproject/private/
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
