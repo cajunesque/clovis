@@ -4,58 +4,74 @@ import java.util.List;
 
 public abstract class Syllable { // derive LatinSyllable, GreekSyllable, etc each with persistence to cat=<lang>. tab=<LETTER>
 
-    public enum SyllableType { OPEN_SHORT, OPEN_LONG, CLOSED }
+    protected static List<List<Letter>> validInitials;
 
-    private int id;
+    public enum SyllableLength {SHORT, COMMON, LONG}
 
-    private String translit;
-    private String present;
-    private SyllableType type;
-    private List<Letter> letters;
+    private Letters initials; // 0 or more consonants
+    private Letter vowel; // or diphthong
+    private Letters finals; // 0 or more letters, ideally all consonants
 
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+
+    // no ctor, since abstract, but language ctor will initially try to load the syllable into initial, vowel, and finals
+    // counting from beginning for consonants unless a vowel is found first
+    // one vowel or diphthong in the vowel
+    // all other letters (vowels too) in final
+    // if all initials are empty or found in a language word (start con(s)) and vowel is one vowel or diphthong,
+    // from remaining finals (e.g. rbstan) a new syllable can be made assign a type
+
 
     public String getTranslit() {
-        return translit;
-    }
-    public void setTranslit(String translit) {
-        this.translit = translit;
+        return initials.toString();
     }
 
     public String getPresent() {
-        return present;
-    }
-    public void setPresent(String present) {
-        this.present = present;
+        return initials.toString();
     }
 
-    public SyllableType getType() {
-        return type;
+    public boolean isClosed() {
+        return finals!=null && finals.length()>0;
     }
-    public void setType(SyllableType type) {
-        this.type = type;
+    public boolean isOpen() {
+        return !isClosed();
     }
 
-    public List<Letter> getLetters() {
-        return letters;
+    public SyllableLength getLength() {
+        if (isClosed()) return SyllableLength.LONG;
+        else if (isOpen() && vowel.getTypes().contains("SHORT")) return SyllableLength.SHORT;
+        else return SyllableLength.COMMON;
     }
-    public void setLetters(List<Letter> letters) {
-        this.letters = letters;
+
+    public Letters getInitials() {
+        return initials;
     }
+    public void setInitials(Letters initials) {
+        this.initials = initials;
+    }
+
+    public Letter getVowel() {
+        return vowel;
+    }
+    public void setVowel(Letter vowel) {
+        this.vowel = vowel;
+    }
+
+    public Letters getFinals() {
+        return finals;
+    }
+    public void setFinals(Letters finals) {
+        this.finals = finals;
+    }
+
+    protected boolean isValidInitial() { return validInitials.contains(initials); }
 
     @Override
     public String toString() {
-        return "Syllable{#" + id +
-                ", translit='" + translit + '\'' +
-                ", present='" + present + '\'' +
-                ", type=" + type +
+        return "Syllable{" +
+                ", (initials,vowel,finals)=(" + initials + ',' + vowel + ','+ finals  + ')' +
+                ", closed=" + isClosed() +
+                ", length=" + getLength() +
                 '}';
     }
 
 }
-

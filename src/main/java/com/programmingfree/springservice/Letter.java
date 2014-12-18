@@ -98,6 +98,10 @@ public abstract class Letter { // derive LatinLetter, GreekLetter, etc each with
         this.positionType = ((p == null) ? PositionType.ALLPOSITION : p);
     }
 
+    public boolean isVowel() { return phoneticTypes.contains(PhoneticType.VOWEL); }
+    public boolean isDiphthong() { return phoneticTypes.contains(PhoneticType.DIPHTHONG); }
+    // more as needed
+
     @Override
     public String toString() {
         return "Letter{#" + id +

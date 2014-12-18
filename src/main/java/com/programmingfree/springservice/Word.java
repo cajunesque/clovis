@@ -1,15 +1,17 @@
 package com.programmingfree.springservice;
 
+import com.programmingfree.springservice.greek.model.GreekString;
+import com.programmingfree.springservice.greek.model.GreekSyllable;
 import org.thymeleaf.util.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Word { // derive LatinWord, GreekWord, etc each with persistence to cat=<lang>. tab=<WORD>
 
     //private Context id; // combination of textid and wordid, used to getPhrase and getClause
 
-    private String translit;
-    private String present;
+    private GreekString str; // necessary?
     private List<Syllable> syllables;
     private Lexeme lexeme; // if null then ambiguous
     private Morpheme morpheme; // if null then ambiguous
@@ -24,17 +26,11 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
     }
     */
     public String getTranslit() {
-        return translit;
-    }
-    public void setTranslit(String translit) {
-        this.translit = translit;
+        return str.getTranslit();
     }
 
     public String getPresent() {
-        return present;
-    }
-    public void setPresent(String present) {
-        this.present = present;
+        return str.getPresent();
     }
 
     public void hyphenate() {
@@ -44,11 +40,91 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
     }
 
 
+    public LinkedList<Syllable> hyphenate(String str) { // in GreekWord
+        LinkedList<Syllable> syls = new LinkedList<Syllable>();
+        syls.add(new GreekSyllable(str)); // start case
+        //syllabify(syls); // recursively create syllables from syllables
+        return syls;
+    }
+    /*
+    public void syllabify (LinkedList<Syllable> syls) {
+        if (no_of_vowels(phonemes)==1) {
+            mark_syllable_boundary(at_the_end_of_phonemes);
+        else
+            if (is_a_vowel(phonemes[current_position])) {
+                no_of_consonants = count_no_of_consonants_upto_next_vowel(phonemes,current_position);
+                if (no_of_consonants == 0) {
+                 if (is_a_vowel(phonemes[current_position + 1])) {
+                     mark_syllable_boundary(current_position) // Rule#3
+                     syllabify(phonemes, current_position + 1);
+                 }
+            } else if (no_of_consonants == 1) {
+                    mark_syllable_boundary(current_position) // Rule#1
+                    syllabify(phonemes, current_position + 2);
+                }
+            if (no_of_consonants == 2) {
+                mark_syllable_boundary(current_position + 1);
+                syllabify(phonemes, current_position + 3) //Rule#2
+            }
+            if (no_of_consonants == 3) {
+                if (phonemes[current_position+3] in ("r","y") {
+                    mark_syllable_boundary(current_position+1); //Rule#4
+                    syllabify(phonemes, current_position+4);
+            else
+                if (is_a_stop(phonemes[current_posi+1]) && is_a_stop(phonemes[current_posi+2])){
+                        mark_syllable_boundary(current_position + 1); //  Rule#5
+                        syllabify(phonemes, current_position + 4)
+                else
+                        mark_syllable_boundary(current_position + 2); //  Rule#6
+                        syllabify(phonemes, current_position + 4)
+                    }
+                }
+            }
+            if no_of_consonants are greater than 3 then
+    if (phonemes[current_position+no_of_consonants] in ( “r” or “y”)){
+                    mark_syllable_boundary(current_position + no_of_consonants - 2) // Rule#7
+                    Syllabify(phonemes, current_position + no_of_consonants - 1)
+                    else
+                    syllable_boundary = find_min_sonority_position(phonemes, current_postion);
+                    mark_syllable_boundary(syllable_boundary); //  Rule#8
+                    Syllabify(phonemes, syllable_boundary + 1);
+                }
+            }
+
+    }
+    else
+        temp = current_postion
+            repeat
+                temp = temp + 1;
+            until((is_a_vowel(phonemes[temp]))
+            syllabify(phonemes,temp);
+}
+}
+}
+*/
+
+
+    /* greek word would have a no_diacritics method */
+
+
+// recursion with tree or linked-list
+/*
+    katalamba/nesthe
+stem and ending lookup:  kata  lamb-a/n e-sthe (only costly if lex or morph be unknown)
+  ka ta lamb a/n e sthe
+without stem and ending lookup:
+  ka ta lam ba/ nes the
+
+// v-v   v-cv    vc-cv
+// vccv vcccv vccccv vcccccv
+
 // STEM RULES
 // first seek any stem in word and divide using that (linked list)
+
 // CONSONANT RULES
 // (already queried dictionary for consonantal syllable starts: consonant(s) leading up to vowel = Word.WORDSTARTS)
 // any single Letter.CONSONANT between two Letter.VOWELS begins a syllable (go thru list, breaking up syls)
+// any double Letter.CONSONANT between two Letter.VOWELS splits the double consonant (ditto)
 // groups of Letter.CONSONANTs are split before Word.WORDSTARTS (wordstarts=sylstarts) (ditto)
 // VOWEL RULE
 // groups of Letter.VOWELs are split before Letter.DIPHTHONG (go thru list, breaking up syls)
@@ -250,63 +326,16 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
 
 
     function addDistractorSyllables(d, s, e, text) { // add syllables using s, e, text to  d
+        // CHANGE THIS TO createSimilarSyllables(syl, num)
+        // first get syllable type: V VC VCC, CV, CVC, CVCC, CCV, CCVC, CCVCC
+        // then create num of the same type, replace one letter each time with a different letter of the same type
+
         // create a syllable list, adding to global Syllable Array
         // put all stems and endings (and words from definition) into a word array
         // divide all these into syllables, adding them to a syllable arr
         // the list will have unique syllables and nont will be in d
 
         // load the new syllables into LanguagePhonetics.Syls
-        if (!s) s = '';	if (!e) e = '';	if (!text) text = '';
-        var wordarr = (s.split(',').join(' ')+' '+e.split(',').join(' ')+' '+text.replace(/\<\>/g,'')).replace(/  /g,' ').split(' ');
-        for (var i = 0; i < wordarr.length; i++) {
-            var word = wordarr[i]; word = word.replace(/^[\[\(\"\']*/g,'').replace(/[\]\)\"\'\.,;:!?]*$/g,'');
-            var syls = dividebysyls(word); if (syls == "") continue;
-            var wordsylarr = dividebysyls(word).split('-');
-            for (var j = 0; j < wordsylarr.length; j++)
-                if (LanguagePhonetics.Syls.indexOf(wordsylarr[j]) < 0)
-                    LanguagePhonetics.Syls.push(wordsylarr[j]);
-        }
-
-        d = trim(d);
-        var originalarr = d.split('-'); // syllables of d which we are distracting for
-
-        // load a 100 element sarr with all words from SyllbleArray excluding the original syls
-        var sarr = new Array();
-        for (var i = 0; i < LanguagePhonetics.Syls.length; i++)
-            if (originalarr.indexOf(LanguagePhonetics.Syls[i]) < 0)
-                sarr.push(LanguagePhonetics.Syls[i]);
-        sarr.sort(byRandom);
-        sarr = sarr.slice(0, 100);
-        //DEBUG("ADD DISTRACTOR SYLLABLES: pool from which to find distractor syls: "+sarr);
-
-        // now sort the small sarr by closeness to syllables in d into an array called sarrtotal
-        var closesyls = new Object(); // sarrpart = new Array(), sarrtotal = new Array();
-        for (var i = 0; i < originalarr.length; i++) {
-            var origsyl = originalarr[i];
-            closesyls[origsyl] = sarr.slice(0); // starts with random syls
-            closesyls[origsyl].sort( function(astr,bstr) {
-                return EditDistance(astr,origsyl) - EditDistance(bstr,origsyl);
-            } ); // sort function
-        }
-        // from closesyls[ num-orig-syls ], recreate sarr
-        sarr = new Array();
-        for (var i = 0; i < originalarr.length; i++) {
-            for (var j = 0; j < Math.min(2,closesyls[originalarr[i]].length); j++) {
-                var syl = closesyls[originalarr[i]][j];
-                if (sarr.indexOf(syl) < 0) sarr.push(syl);
-            }
-        }
-
-        DEBUG("ADD DISTRACTOR SYLLABLES: syllables similar to "+d+": "+sarr);
-
-        sarr.sort(byRandom);
-        // now skim off just the right amount:
-        var rightamount = originalarr.length/2;
-        if (rightamount<3) rightamount = 3; if (rightamount>sarr.length) rightamount = sarr.length;
-        sarr = sarr.slice(0, rightamount );
-        DEBUG("ADD DISTRACTOR SYLLABLES: right amount of distractor syllables, ["+3+", "+originalarr.length/2+", "+sarr.length+"] = "+rightamount+", gives "+sarr);
-
-        return originalarr.concat(sarr); // the list of original syllables and distractor syllables
     }
 
     function addDistractorLetters(d) { // split on presentation letters instead and then get translit for these
@@ -334,15 +363,15 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
         return translets.split(' ');
     }
 
-
+    */
 
 
 
     @Override
     public String toString() {
         return "Word{#" + /*id +*/
-                ", translit='" + translit + '\'' +
-                ", present='" + present + '\'' +
+                ", translit='" + getTranslit() + '\'' +
+                ", present='" + getPresent() + '\'' +
                 ", syllables='" + StringUtils.join(syllables, '-')+ '\'' +
                 ", lexeme='" + lexeme + '\'' +
                 ", morpheme='" + morpheme + '\'' +
