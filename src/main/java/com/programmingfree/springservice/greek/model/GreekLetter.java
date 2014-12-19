@@ -7,6 +7,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="letters", catalog="clovisdb") // rename catalog to greek , i.e. <LANG>
-public class GreekLetter extends Letter {}
+public class GreekLetter extends Letter {
+
+}
 
 
