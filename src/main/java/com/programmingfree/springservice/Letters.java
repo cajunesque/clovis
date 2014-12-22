@@ -1,17 +1,12 @@
 package com.programmingfree.springservice;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
 public class Letters { // derive LatinString, GreekString, etc
 
-    private List<Letter> letters;
+    protected List<Letter> letters;
 
     public Letters() {
         letters = new ArrayList<Letter>();
@@ -21,6 +16,7 @@ public class Letters { // derive LatinString, GreekString, etc
     }
 
     public Letter letterAt(int i) {
+        if (i<0 || i>length()-1) throw new LettersException("Out of Bounds");
         return letters.get(i);
     }
     public int length() {
@@ -46,10 +42,32 @@ public class Letters { // derive LatinString, GreekString, etc
         letters.addAll(lets.letters);
         return new Letters(letters);
     }
-    public Letters substring(int i) {
-        int i1 = length();
-        return new Letters(letters.subList(i, i1));
+    public Letters substring(int from) {
+        int len = length();
+        return new Letters(letters.subList(from, len));
     }
+    public Letters substring(int from, int to) {
+        return new Letters(letters.subList(from, to));
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null /*|| getClass() != o.getClass()*/) return false;
+
+        Letters letters1 = (Letters) o;
+
+        if (!letters.equals(letters1.letters)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return letters.hashCode();
+    }
+
     @Override
     public java.lang.String toString() {
         return "Letters/String{" +

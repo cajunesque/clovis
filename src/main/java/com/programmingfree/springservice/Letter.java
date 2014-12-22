@@ -37,6 +37,16 @@ public abstract class Letter { // derive LatinLetter, GreekLetter, etc each with
         }
     }
 
+    public Letter() {}
+
+    public Letter(String name, String translit, String present, String types) {
+        id = 0;
+        this.name = name;
+        this.translit = translit;
+        this.present = present;
+        this.setTypes(types);
+    }
+
     private int id;
     private String name;
     private String translit;
@@ -102,9 +112,25 @@ public abstract class Letter { // derive LatinLetter, GreekLetter, etc each with
     @Transient public boolean isDiphthong() { return phoneticTypes.contains(PhoneticType.DIPHTHONG); }
     // more as needed
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; };
+        if (o == null /*|| getClass() != o.getClass()*/ ) { return false; }
+        Letter letter = (Letter) o;
+        if (!translit.equals(letter.translit)) { return false; }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return translit.hashCode();
+    }
+
     @Override
     public String toString() {
         return "Letter{#" + id +
+                ", name='" + name + '\'' +
                 ", translit='" + translit + '\'' +
                 ", present='" + present + '\'' +
                 ", types={" + getTypes() + "}" +
