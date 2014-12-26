@@ -24,14 +24,9 @@ public class GreekWord extends Word {
     // private Syntax syntax; // syntax in its clause
 
     /*
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
+    public int getId() {return id;}
+    public void setId(int id) {this.id = id;}
     */
-
 
     public LinkedList<GreekSyllable> hyphenate(GreekString str) { // in GreekWord
         LinkedList<GreekSyllable> syls = new LinkedList<GreekSyllable>();
@@ -48,7 +43,9 @@ public class GreekWord extends Word {
             Letters final0 = finalstr.substring(0,2);
             Letters initial1 = finalstr.substring(3);
             syls.getLast().setFinals(final0);
-            syls.add(new GreekSyllable(new initial1));
+            GreekString str = new GreekString(initial1);
+            GreekSyllable syl = new GreekSyllable(str);
+            syls.add(syl);
             return;
         } catch (SyllableException e) {
             syllabify(syls);
@@ -91,7 +88,7 @@ public class GreekWord extends Word {
                 }
             }
             if no_of_consonants are greater than 3 then
-    if (phonemes[current_position+no_of_consonants] in ( “r” or “y”)){
+                if (phonemes[current_position+no_of_consonants] in ( “r” or “y”)){
                     mark_syllable_boundary(current_position + no_of_consonants - 2) // Rule#7
                     Syllabify(phonemes, current_position + no_of_consonants - 1)
                     else
@@ -100,7 +97,6 @@ public class GreekWord extends Word {
                     Syllabify(phonemes, syllable_boundary + 1);
                 }
             }
-
     }
     else
         temp = current_postion
@@ -194,7 +190,7 @@ without stem and ending lookup:
                 }
             }
         }
-        // DEBUG("after startcon analysis  :"+strng+" = "+str);
+        // DEBUG("after startcon analysis  :"+str+" = "+str);
 
         // mark all vowels greedily as 0(+)*, di- and tri-phthongs are also grouped here
         if (str.length>1) {

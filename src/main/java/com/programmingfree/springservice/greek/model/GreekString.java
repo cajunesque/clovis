@@ -27,7 +27,9 @@ public class GreekString extends Letters {
         setTranslit(str);
         if (this.getTranslit().equals(this.getPresent())) { setPresent(str); }
     }
-
+    public GreekString(Letters str) {
+        this.setLetters(str.getLetters());
+    }
     public void setTranslit(String str) { // litterates from str as translit
         List<Letter> lets = new ArrayList<Letter>();
         for (int i = 0; i < str.length(); i++) {
@@ -49,7 +51,7 @@ public class GreekString extends Letters {
                 i += (match.getTranslit().length() - 1);
             }
         }
-        this.letters = lets;
+        this.setLetters(lets);
     }
 
     public void setPresent(String str) { // litterates from str as present
@@ -73,7 +75,7 @@ public class GreekString extends Letters {
                 i += (match.getPresent().length() - 1);
             }
         }
-        this.letters = lets;
+        this.setLetters(lets);
     }
 
     // syllabify

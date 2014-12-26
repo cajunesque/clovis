@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Letters { // derive LatinString, GreekString, etc
 
-    protected List<Letter> letters;
+    private List<Letter> letters;
 
     public Letters() {
         letters = new ArrayList<Letter>();
@@ -14,6 +14,9 @@ public class Letters { // derive LatinString, GreekString, etc
     public Letters(List<Letter> lets) {
         this.letters = lets;
     }
+
+    public List<Letter> getLetters() { return letters; }
+    public void setLetters(List<Letter> letters) { this.letters = letters; }
 
     public Letter letterAt(int i) {
         if (i<0 || i>length()-1) throw new LettersException("Out of Bounds");

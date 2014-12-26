@@ -31,30 +31,6 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
         return str.getPresent();
     }
 
-    // Generic version: split double vowels, double consonants, consonants between vowels
-    public LinkedList<Syllable> hyphenate(Letters str) {
-        LinkedList<Syllable> syls = new LinkedList<Syllable>();
-        syls.add(new Syllable(str)); // give basic logic without valid initials and make non-abstract
-        syllabify(syls);
-        // syls.removeFirst();
-        return syls;
-    }
-
-    private void syllabify(LinkedList<Syllable> syls) {
-        try {
-            Letters finalstr = syls.getLast().getFinals();
-            // break the final into 0.final and 1.initial (try to use logic already in new GreekSyllable)
-            Letters final0 = finalstr.substring(0,2);
-            Letters initial1 = finalstr.substring(3);
-            syls.getLast().setFinals(final0);
-            syls.add(new Syllable(new initial1));
-            return;
-        } catch (SyllableException e) {
-            syllabify(syls);
-        }
-    }
-
-
 
     @Override
     public String toString() {
