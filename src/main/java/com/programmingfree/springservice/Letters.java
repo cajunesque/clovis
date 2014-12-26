@@ -43,8 +43,7 @@ public class Letters { // derive LatinString, GreekString, etc
         return new Letters(letters);
     }
     public Letters substring(int from) {
-        int len = length();
-        return new Letters(letters.subList(from, len));
+        return new Letters(letters.subList(from, length()));
     }
     public Letters substring(int from, int to) {
         return new Letters(letters.subList(from, to));
@@ -54,7 +53,7 @@ public class Letters { // derive LatinString, GreekString, etc
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null /*|| getClass() != o.getClass()*/) return false;
+        if (o == null /*|| getClass() != o.getClass()*/) return false; // instance of
 
         Letters letters1 = (Letters) o;
 
