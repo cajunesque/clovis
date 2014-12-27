@@ -1,21 +1,23 @@
 package com.programmingfree.springservice;
 
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @MappedSuperclass
 public class Morpheme {
 
+    protected int id;
+
+    protected String rulekey;
+    protected String pars;
+    protected List<MorphRule> rulevals;
+    protected String pattern;
+    protected Double freq;
+
     @Id
-    private int id;
-
-    private String rulekey;
-    private String pars;
-    private List<String> ruleval;
-    private String pattern;
-    private Double freq;
-
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() {
         return id;
     }
@@ -37,11 +39,18 @@ public class Morpheme {
         this.pars = pars;
     }
 
-    public List<String> getRuleval() {
-        return ruleval;
+    @Column(name="ruleval")
+    public String getRulevals() {
+        StringBuilder sb = new StringBuilder();
+        for (MorphRule rule : rulevals) sb.append(":").append(rule.getMorphrule());
+        return sb.substring(sb.length() > 0 ? 1 : 0);
     }
-    public void setRuleval(List<String> ruleval) {
-        this.ruleval = ruleval;
+    @Column(name="ruleval")
+    public void setRulevals(String rulevalList) {
+        this.rulevals = new ArrayList<MorphRule>();
+        for (String str : Arrays.asList(rulevalList.split(":"))) {
+            rulevals.add(new MorphRule(str));
+        }
     }
 
     public String getPattern() {
@@ -63,7 +72,7 @@ public class Morpheme {
         return "Morpheme{#"+ id +
                 ", rulekey='" + rulekey + '\'' +
                 ", pars='" + pars + '\'' +
-                ", ruleval=" + ruleval +
+                ((rulevals==null)? "" : ", rulevals=" + this.getRulevals()) +
                 ", pattern='" + pattern + '\'' +
                 ", freq=" + freq +
                 '}';

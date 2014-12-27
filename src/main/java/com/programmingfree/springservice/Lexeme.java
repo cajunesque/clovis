@@ -12,15 +12,15 @@ public class Lexeme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    protected int id;
 
-    private String lex;
-    private String pars;
-    private String semanid;
-    private String def;
-    private String etym;
-    private String syntax;
-    private Double freq;
+    protected String lex;
+    protected String pars;
+    protected String semanid;
+    protected String def;
+    protected String etym;
+    protected String syntax;
+    protected Double freq;
 
     public int getId() {
         return id;

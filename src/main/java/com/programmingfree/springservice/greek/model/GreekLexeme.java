@@ -46,9 +46,7 @@ public class GreekLexeme extends Lexeme {
 		this.irreg = irreg;
 	}
 
-	public String getVariant() {
-		return variant;
-	}
+	public String getVariant() { return variant; }
 	public void setVariant(String variant) {
 		this.variant = variant;
 	}
@@ -56,19 +54,19 @@ public class GreekLexeme extends Lexeme {
 
 	@Override
 	public String toString() {
-		return "GreekLexeme{#"+ getId() +
-				", lex='" + getLex() + '\'' +
-				", pars='" + getPars() + '\'' +
+		return "GreekLexeme{#"+ id +
+				", lex='" + lex + '\'' +
+				", pars='" + pars + '\'' +
 				", constr='" + constr + '\'' +
 				", info='" + info + '\'' +
 				", stem='" + stem + '\'' +
 				", irreg='" + irreg + '\'' +
 				", variant='" + variant + '\'' +
-				", semanid='" + getSemanid() + '\'' +
-				", def='" + getDef() + '\'' +
-				", etym='" + getEtym() + '\'' +
-				", syntax='" + getSyntax() + '\'' +
-				", freq=" + getFreq() +
+				", semanid='" + semanid + '\'' +
+				", def='" + def + '\'' +
+				", etym='" + etym + '\'' +
+				", syntax='" + syntax + '\'' +
+				", freq=" + freq +
 				'}';
 	}
 }
