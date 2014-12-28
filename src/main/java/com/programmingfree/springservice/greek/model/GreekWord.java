@@ -5,14 +5,17 @@ import com.programmingfree.springservice.SyllableException;
 import com.programmingfree.springservice.Word;
 import org.thymeleaf.util.StringUtils;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by markcbordelon on 12/21/14.
+ * Created by markcbordelon on 12/28/14.
  */
 
-
+@Entity
+@Table(name="words", catalog="clovisdb") // rename catalog to greek , i.e. <LANG>
 public class GreekWord extends Word {
 
     //private Context id; // combination of textid and wordid, used to getPhrase and getClause

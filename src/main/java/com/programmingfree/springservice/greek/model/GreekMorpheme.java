@@ -1,6 +1,5 @@
 package com.programmingfree.springservice.greek.model;
 
-import com.programmingfree.springservice.Lexeme;
 import com.programmingfree.springservice.MorphRule;
 import com.programmingfree.springservice.Morpheme;
 
@@ -34,13 +33,13 @@ public class GreekMorpheme extends Morpheme {
     @Override
     public String toString() {
         return "Morpheme{#"+ id +
-                ", rulekey='" + rulekey + '\'' +
-                ", pars='" + pars + '\'' +
-                ", rulevals=" + this.getRulevals() +
-                ((variants==null)? "" : ", variants=" + this.getVariants()) +
-                ", pattern='" + pattern + '\'' +
-                ", freq=" + freq +
-                '}';
+            ", rulekey='" + rulekey + '\'' +
+            ", pars='" + pars + '\'' +
+            ", rulevals=" + this.getRulevals() +
+            ((variants==null)? "" : ", variants=" + this.getVariants()) +
+            ", pattern='" + pattern + '\'' +
+            ", freq=" + freq +
+            '}';
     }
 }
 
