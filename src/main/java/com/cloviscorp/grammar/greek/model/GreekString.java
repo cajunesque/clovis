@@ -18,13 +18,6 @@ public class GreekString extends Letters implements InitializingBean {
 
     @Autowired
     public GreekLetterRepository repository; // this is null until the bean is completely instantiated
-/*
-    private Sort sortByTranslitLengthDesc() {
-        return new Sort(Sort.Direction.DESC, "length(translit)");
-    }
-*/
-
-
 
     public GreekString() {
         super();
@@ -38,12 +31,13 @@ public class GreekString extends Letters implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() {
+        System.out.println("After Properties set called..repo check");
         Assert.notNull(repository);
     }
 
     @PostConstruct
     private void checkRepo() {
-        System.out.println("repo check");
+        System.out.println("@Postconstruct called - repo check");
         Assert.notNull(repository);
     }
 
@@ -103,3 +97,4 @@ public class GreekString extends Letters implements InitializingBean {
     http://www.aclweb.org/anthology/I05-1039
     */
 }
+

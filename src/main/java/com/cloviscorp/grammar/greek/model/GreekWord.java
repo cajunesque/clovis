@@ -31,14 +31,14 @@ public class GreekWord extends Word {
     }
 
 
-    @Transient
-    public GreekLexeme getLexeme() { return (GreekLexeme) lexeme; }
+    //@Transient
+    //public GreekLexeme getLexeme() { return (GreekLexeme) lexeme; }
 
-    @Transient
-    public GreekMorpheme getMorpheme() { return (GreekMorpheme) morpheme; }
+    //@Transient
+    //public GreekMorpheme getMorpheme() { return (GreekMorpheme) morpheme; }
 
-    @Transient
-    public GreekString getString() { return (GreekString) str; }
+    //@Transient
+    //public GreekString getString() { return (GreekString) str; }
 
     public LinkedList<GreekSyllable> hyphenate(GreekString str) { // in GreekWord
         LinkedList<GreekSyllable> syls = new LinkedList<GreekSyllable>();
@@ -388,8 +388,8 @@ without stem and ending lookup:
     @Override
     public String toString() {
         return "Word{#" + /*id +*/
-                ", translit='" + getTranslit() + '\'' +
-                ", present='" + getPresent() + '\'' +
+                //", translit='" + getTranslit() + '\'' +
+                //", present='" + getPresent() + '\'' +
                 ", syllables='" + StringUtils.join(syllables, '-')+ '\'' +
                 ", lexeme='" + lexeme + '\'' +
                 ", morpheme='" + morpheme + '\'' +

@@ -47,15 +47,15 @@ public abstract class Letter { // derive LatinLetter, GreekLetter, etc each with
         this.setTypes(types);
     }
 
-    private int id;
-    private String name;
-    private String translit;
-    private String present;
-
+    protected int id;
+    protected String name;
+    protected String translit;
+    protected String present;
     /*@JsonInclude*/ private String types;
-    private List<PhoneticType> phoneticTypes;
-    private CaseType caseType;
-    private PositionType positionType;
+
+    protected List<PhoneticType> phoneticTypes;
+    protected CaseType caseType;
+    protected PositionType positionType;
 
     @Id
     public int getId() {

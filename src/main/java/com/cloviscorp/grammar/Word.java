@@ -6,9 +6,13 @@ import javax.persistence.*;
 import java.util.LinkedList;
 
 @MappedSuperclass
+@Access(AccessType.PROPERTY)
 public abstract class Word { // derive LatinWord, GreekWord, etc each with persistence to cat=<lang>. tab=<WORD>
 
     protected int id; // PK id in table
+    protected int textid, clauseid, wordid;
+    protected int dictid, morphid;
+
     protected Letters str;
 
     @OneToOne
@@ -23,7 +27,6 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
     // private Syntax syntax; // syntax in its clause
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -43,6 +46,14 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
         context.wordid = wordid;
     }
 
+    public int getDictid() { return dictid;  }
+    public void setDictid(int dictid) { this.dictid = dictid; }
+
+    public int getMorphid() { return morphid; }
+    public void setMorphid(int morphid) { this.morphid = morphid; }
+
+
+
     @Transient
     public String getTranslit() {
         return str.getTranslit();
@@ -53,12 +64,11 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
         return str.getPresent();
     }
 
-
     @Override
     public String toString() {
         return "Word{#" + /*id +*/
-                ", translit='" + getTranslit() + '\'' +
-                ", present='" + getPresent() + '\'' +
+                //", translit='" + getTranslit() + '\'' +
+                //", present='" + getPresent() + '\'' +
                 ", syllables='" + StringUtils.join(syllables, '-')+ '\'' +
                 ", lexeme='" + lexeme + '\'' +
                 ", morpheme='" + morpheme + '\'' +
