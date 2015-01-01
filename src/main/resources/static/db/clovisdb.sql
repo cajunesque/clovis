@@ -1,5 +1,5 @@
-create database clovisdb;
-use clovisdb;
+create database greek;
+use greek;
 
 create table dictionary(id int not null auto_increment,
 lex varchar(30) not null, pars varchar(1) not null, constr varchar(50), info varchar(5), stem varchar(100), irreg varchar(1000), variant varchar(500), semanid varchar(50), def varchar(255), etym varchar(500),

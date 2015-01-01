@@ -4,32 +4,50 @@ package com.programmingfree.springservice.greek.model;
 import com.programmingfree.springservice.Letter;
 import com.programmingfree.springservice.Letters;
 import com.programmingfree.springservice.greek.GreekLetterRepository;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Sort;
+import org.springframework.util.Assert;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreekString extends Letters {
+//import org.springframework.data.domain.Sort;
+
+public class GreekString extends Letters implements InitializingBean {
 
     @Autowired
-    public GreekLetterRepository repository;
+    public GreekLetterRepository repository; // this is null until the bean is completely instantiated
 /*
     private Sort sortByTranslitLengthDesc() {
         return new Sort(Sort.Direction.DESC, "length(translit)");
     }
 */
+
+
+
     public GreekString() {
         super();
     }
-    public GreekString(String str) {
-        super();
-        setTranslit(str);
-        if (this.getTranslit().equals(this.getPresent())) { setPresent(str); }
-    }
+
     public GreekString(Letters str) {
+        super();
         this.setLetters(str.getLetters());
     }
+
+
+    @Override
+    public void afterPropertiesSet() {
+        Assert.notNull(repository);
+    }
+
+    @PostConstruct
+    private void checkRepo() {
+        System.out.println("repo check");
+        Assert.notNull(repository);
+    }
+
+
     public void setTranslit(String str) { // litterates from str as translit
         List<Letter> lets = new ArrayList<Letter>();
         for (int i = 0; i < str.length(); i++) {
@@ -77,6 +95,7 @@ public class GreekString extends Letters {
         }
         this.setLetters(lets);
     }
+
 
     // syllabify
     /*

@@ -74,7 +74,9 @@ public class GreekSyllable extends Syllable {
         // select distinct left(lex,patindex('%[aeiou]%',lex)-1),patindex('%[aeiou]%',lex)-1 from greek.dictionary order by patindex('%[aeiou]%',lex)-1 desc,left(lex,patindex('%[aeiou]%',lex)-1)
         validInitials = new ArrayList<Letters>();
         for (String let : "khth phth khl khr phl phr skh skl sph spl sth str thn thr bl br dr gl gn gr kh kl kn kr ks kt mn ph pl pn pr ps pt rh sk sm sp st th tm tr ts b d g k l m n p s t ` h".split(" ")) {
-            validInitials.add(new GreekString(let));
+            GreekString str = new GreekString();
+            str.setTranslit(let);
+            validInitials.add(str);
         }
     }
 

@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 
 @Entity
-@Table(name="dictionary", catalog="clovisdb") // rename catalog to greek , i.e. <LANG>
+@Table(name="dictionary", catalog="greek")
 public class GreekLexeme extends Lexeme {
 
 	private String constr;

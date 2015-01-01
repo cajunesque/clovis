@@ -1,12 +1,20 @@
 package com.programmingfree.springservice.greek.model;
 
+import com.programmingfree.springservice.Context;
 import com.programmingfree.springservice.Letters;
 import com.programmingfree.springservice.SyllableException;
 import com.programmingfree.springservice.Word;
+import com.programmingfree.springservice.greek.GreekLetterRepository;
+import com.programmingfree.springservice.greek.GreekLexemeRepository;
+import com.programmingfree.springservice.greek.GreekMorphemeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.thymeleaf.util.StringUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,22 +22,31 @@ import java.util.List;
  * Created by markcbordelon on 12/28/14.
  */
 
+
 @Entity
-@Table(name="words", catalog="clovisdb") // rename catalog to greek , i.e. <LANG>
+@Table(name="words", catalog="greek")
 public class GreekWord extends Word {
 
-    //private Context id; // combination of textid and wordid, used to getPhrase and getClause
+    // for lexeme and morphmeme use entity relationship and let the container take care of it
 
-    private GreekString str; // necessary?
-    private List<GreekSyllable> syllables;
-    private GreekLexeme lexeme; // if null then ambiguous
-    private GreekMorpheme morpheme; // if null then ambiguous
-    // private Syntax syntax; // syntax in its clause
+    public String getWord() { return str.getTranslit(); }
+    public void setWord(String translit) {
+        GreekString str = new GreekString();
+        str.setTranslit(translit); if (str.getTranslit().equals(str.getPresent())) { str.setPresent(translit); }
+        this.str = str;
 
-    /*
-    public int getId() {return id;}
-    public void setId(int id) {this.id = id;}
-    */
+        /* this.syllables = hyphenate(this.str); */
+    }
+
+
+    @Transient
+    public GreekLexeme getLexeme() { return (GreekLexeme) lexeme; }
+
+    @Transient
+    public GreekMorpheme getMorpheme() { return (GreekMorpheme) morpheme; }
+
+    @Transient
+    public GreekString getString() { return (GreekString) str; }
 
     public LinkedList<GreekSyllable> hyphenate(GreekString str) { // in GreekWord
         LinkedList<GreekSyllable> syls = new LinkedList<GreekSyllable>();

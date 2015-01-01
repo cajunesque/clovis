@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Entity
-@Table(name="morphology", catalog="clovisdb") // rename catalog to greek , i.e. <LANG>
+@Table(name="morphology", catalog="greek")
 public class GreekMorpheme extends Morpheme {
 
     private List<MorphRule> variants;
