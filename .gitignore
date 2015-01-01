@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # generic files
 *~
 *.lock
@@ -20,3 +21,17 @@ nbproject/private/
 # Maven
 log/
 target/
+=======
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+>>>>>>> 49dfc8b875a4b6966a1b68223cdc5cbe4e15cdbd
