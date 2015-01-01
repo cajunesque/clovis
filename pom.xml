@@ -77,7 +77,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<start-class>com.programmingfree.springservice.Application</start-class>
+		<start-class>com.cloviscorp.grammar.Application</start-class>
 		<java.version>1.6</java.version>
 	</properties>
 
