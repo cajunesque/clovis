@@ -1,13 +1,9 @@
 package com.cloviscorp.grammar.greek.model;
 
-import com.cloviscorp.grammar.Letters;
-import com.cloviscorp.grammar.SyllableException;
-import com.cloviscorp.grammar.Word;
+import com.cloviscorp.grammar.*;
 import org.thymeleaf.util.StringUtils;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.LinkedList;
 
 /**
@@ -19,26 +15,32 @@ import java.util.LinkedList;
 @Table(name="words", catalog="greek")
 public class GreekWord extends Word {
 
-    // for lexeme and morphmeme use entity relationship and let the container take care of it
+    @ManyToOne
+    @JoinColumn(name="dictid",referencedColumnName="id",insertable=false,updatable=false)
+    protected GreekLexeme lexeme;
 
+    @ManyToOne
+    @JoinColumn(name="morphid",referencedColumnName="id",insertable=false,updatable=false)
+    protected GreekMorpheme morpheme;
+
+    /*
     public String getWord() { return str.getTranslit(); }
     public void setWord(String translit) {
         GreekString str = new GreekString();
         str.setTranslit(translit); if (str.getTranslit().equals(str.getPresent())) { str.setPresent(translit); }
         this.str = str;
-
-        /* this.syllables = hyphenate(this.str); */
+        this.syllables = hyphenate(this.str);
     }
 
 
-    //@Transient
-    //public GreekLexeme getLexeme() { return (GreekLexeme) lexeme; }
+    @Transient
+    public GreekLexeme getLexeme() { return (GreekLexeme) lexeme; }
 
-    //@Transient
-    //public GreekMorpheme getMorpheme() { return (GreekMorpheme) morpheme; }
+    @Transient
+    public GreekMorpheme getMorpheme() { return (GreekMorpheme) morpheme; }
 
-    //@Transient
-    //public GreekString getString() { return (GreekString) str; }
+    @Transient
+    public GreekString getString() { return (GreekString) str; }
 
     public LinkedList<GreekSyllable> hyphenate(GreekString str) { // in GreekWord
         LinkedList<GreekSyllable> syls = new LinkedList<GreekSyllable>();
@@ -63,7 +65,7 @@ public class GreekWord extends Word {
             syllabify(syls);
         }
     }
-
+    */
 
     /*
     public void syllabify (LinkedList<Syllable> syls) {
@@ -384,10 +386,10 @@ without stem and ending lookup:
     */
 
 
-
+    /*
     @Override
     public String toString() {
-        return "Word{#" + /*id +*/
+        return "Word{#" + id +
                 //", translit='" + getTranslit() + '\'' +
                 //", present='" + getPresent() + '\'' +
                 ", syllables='" + StringUtils.join(syllables, '-')+ '\'' +
@@ -395,6 +397,6 @@ without stem and ending lookup:
                 ", morpheme='" + morpheme + '\'' +
                 '}';
     }
-
+    */
 }
 

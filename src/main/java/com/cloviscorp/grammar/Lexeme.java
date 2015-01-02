@@ -11,7 +11,8 @@ import javax.persistence.MappedSuperclass;
 public class Lexeme {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     protected int id;
 
     protected String lex;

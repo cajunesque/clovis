@@ -3,7 +3,9 @@ package com.cloviscorp.grammar.greek.model;
 import com.cloviscorp.grammar.Lexeme;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name="dictionary", catalog="greek")
@@ -14,6 +16,9 @@ public class GreekLexeme extends Lexeme {
 	private String stem;
 	private String irreg;
 	private String variant;
+
+	@OneToMany(mappedBy="dictid")
+	private List<GreekWord> words;
 
 
 	public String getConstr() {

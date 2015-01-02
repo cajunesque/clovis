@@ -6,31 +6,76 @@ import javax.persistence.*;
 import java.util.LinkedList;
 
 @MappedSuperclass
-@Access(AccessType.PROPERTY)
 public abstract class Word { // derive LatinWord, GreekWord, etc each with persistence to cat=<lang>. tab=<WORD>
 
+    @Id
     protected int id; // PK id in table
     protected int textid, clauseid, wordid;
-    protected int dictid, morphid;
 
+
+    @Column(name="dictid")
+    protected int dictid;
+
+    @Column(name="morphid")
+    protected int morphid;
+
+    protected String word;
+
+
+    /*
     protected Letters str;
-
-    @OneToOne
-    protected Lexeme lexeme; // if null then ambiguous
-
-    @OneToOne
-    protected Morpheme morpheme; // if null then ambiguous
 
     protected Context context;
 
     protected LinkedList<Syllable> syllables;
     // private Syntax syntax; // syntax in its clause
+    */
 
-    @Id
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    public int getTextid() { return context.textid; }
+    public int getTextid() {
+        return textid;
+    }
+
+    public void setTextid(int textid) {
+        this.textid = textid;
+    }
+
+    public int getClauseid() {
+        return clauseid;
+    }
+
+    public void setClauseid(int clauseid) {
+        this.clauseid = clauseid;
+    }
+
+    public int getWordid() {
+        return wordid;
+    }
+
+    public void setWordid(int wordid) {
+        this.wordid = wordid;
+    }
+
+    public String getWord() {
+        return word;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public int getDictid() { return dictid;  }
+    public void setDictid(int dictid) { this.dictid = dictid; }
+
+    public int getMorphid() { return morphid; }
+    public void setMorphid(int morphid) { this.morphid = morphid; }
+
+
+
+    /*public int getTextid() { return context.textid; }
     public void setTextid(int textid) {
         if (context==null) context = new Context();
         context.textid = textid;
@@ -45,15 +90,9 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
         if (context==null) context = new Context();
         context.wordid = wordid;
     }
+    */
 
-    public int getDictid() { return dictid;  }
-    public void setDictid(int dictid) { this.dictid = dictid; }
-
-    public int getMorphid() { return morphid; }
-    public void setMorphid(int morphid) { this.morphid = morphid; }
-
-
-
+    /*
     @Transient
     public String getTranslit() {
         return str.getTranslit();
@@ -63,17 +102,19 @@ public abstract class Word { // derive LatinWord, GreekWord, etc each with persi
     public String getPresent() {
         return str.getPresent();
     }
+    */
 
+    /*
     @Override
     public String toString() {
-        return "Word{#" + /*id +*/
-                //", translit='" + getTranslit() + '\'' +
-                //", present='" + getPresent() + '\'' +
+        return "Word{#" + id +
+                ", translit='" + getTranslit() + '\'' +
+                ", present='" + getPresent() + '\'' +
                 ", syllables='" + StringUtils.join(syllables, '-')+ '\'' +
                 ", lexeme='" + lexeme + '\'' +
                 ", morpheme='" + morpheme + '\'' +
                 '}';
     }
-
+    */
 }
 

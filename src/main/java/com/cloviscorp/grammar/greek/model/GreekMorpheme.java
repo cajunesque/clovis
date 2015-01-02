@@ -5,6 +5,7 @@ import com.cloviscorp.grammar.MorphRule;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,9 @@ import java.util.List;
 public class GreekMorpheme extends Morpheme {
 
     private List<MorphRule> variants;
+
+    @OneToMany(mappedBy="morphid")
+    private List<GreekWord> words;
 
     @Column(name="variant")
     public String getVariants() {
